@@ -23,11 +23,27 @@
       </div>
 
       <div class="container mt-5">
-        <select class="form-select" aria-label="Default select example">
-          <option selected>Select City</option>
+        <select id="cityList" class="form-select" aria-label="Default select example">
+          <option>Select City</option>
         </select>
+      </div>
+      <div class="container mt-5">
+        <table class="table">
+            <thead>
+              <tr>
+                
+                <th scope="col">X</th>
+                <th scope="col">Y</th>
+                <th scope="col">Z</th>
+              </tr>
+            </thead>
+            <tbody id="weatherInfoTB">
+              
+            </tbody>
+          </table>
       </div>
     </main>
     <footer></footer>
+    <script src="./scripts/weather.js"></script>
   </body>
 </html>
