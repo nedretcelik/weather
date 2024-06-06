@@ -34,6 +34,7 @@ function buildCityList() {
 }
 
 function fillTable(city) {
+  weatherInfoTB.innerText = "";
   for (const prop of city.properties.periods) {
     let row = weatherInfoTB.insertRow();
 
@@ -48,7 +49,7 @@ function fillTable(city) {
 }
 
 function loadWeather() {
-    const city = cities.find(c => c.name == cityList.selectedOptions[0].value)
+  const city = cities.find((c) => c.name == cityList.selectedOptions[0].value);
   fetch(`https://api.weather.gov/points/${city.latitude},${city.longitude}`)
     .then((response) => response.json())
     .then((city) => {
