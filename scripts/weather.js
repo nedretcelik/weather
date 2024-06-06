@@ -1,4 +1,4 @@
-"use strict";
+("use strict");
 
 let cities = [
   {
@@ -33,36 +33,36 @@ function buildCityList() {
   }
 }
 
-function weather() {
-  for (const city of cities) {
-const cityList = document.querySelector("#cityList");
-    
-    fetch(`https://api.weather.gov/points/${city.latitude},${city.longitude}`)
-      .then((response) => response.json())
-      .then((city) => {
-        console.log(city);
-        let forecast = city.properties.forecast;
-        fetch(`${forecast}`)
-          .then((response) => response.json())
-          .then((city) => {
-            console.log(city.properties.periods);
+function fillTable(city) {
+  for (const prop of city.properties.periods) {
+    let row = weatherInfoTB.insertRow();
 
-            for (const prop of city.properties.periods) {
-              let row = weatherInfoTB.insertRow();
+    let cell1 = row.insertCell();
+    cell1.innerText = prop.name;
 
-              let cell1 = row.insertCell();
-              cell1.innerText = prop.name;
-
-              let cell2 = row.insertCell();
-              cell2.innerText = prop.temperature + prop.temperatureUnit;
-              let cell3 = row.insertCell();
-              cell3.innerText = prop.shortForecast;
-
-            }
-          });
-      });
+    let cell2 = row.insertCell();
+    cell2.innerText = prop.temperature + prop.temperatureUnit;
+    let cell3 = row.insertCell();
+    cell3.innerText = prop.shortForecast;
   }
 }
 
+function loadWeather() {
+    const city = cities.find(c => c.name == cityList.selectedOptions[0].value)
+  fetch(`https://api.weather.gov/points/${city.latitude},${city.longitude}`)
+    .then((response) => response.json())
+    .then((city) => {
+      return city.properties.forecast;
+    })
+    .then((forecast) => {
+      return fetch(`${forecast}`);
+    })
+    .then((response) => response.json())
+    .then((city) => {
+      console.log(city.properties.periods);
+      fillTable(city);
+    });
+}
+
+cityList.onchange = loadWeather;
 buildCityList();
-weather();
